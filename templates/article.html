@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${article.name}"></title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info" th:text="${article.name}"></h2>
+            </div>
+
+            <div class="content rounded p-4">
+                <div class="row">
+                    <div class="col text-center">
+                        <img class="rounded-5" th:src="${'/img/' + article.photo}"
+                             style="max-width: 100%;max-height: 500px">
+                        <a class="btn btn-primary w-100 mt-3" th:href="${'/img/' + article.file}"
+                           target="_blank">Файл</a>
+                    </div>
+                    <div class="col">
+                        <div th:if="${role == 'ADMIN'}" class="row mb-3">
+                            <div class="col">
+                                <a th:href="${'/articles/' + article.id + '/edit'}"
+                                   class="btn btn-info w-100">Обновить</a>
+                            </div>
+                            <div class="col">
+                                <a th:href="${'/articles/' + article.id + '/delete'}"
+                                   class="btn btn-danger w-100">Удалить</a>
+                            </div>
+                        </div>
+                        <p class="lead" th:text="${'Тема: ' + article.theme}"></p>
+                        <p class="lead" th:text="${'Автор: ' + article.author}"></p>
+                        <p align="justify" th:text="${'Описание: ' + article.description}"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

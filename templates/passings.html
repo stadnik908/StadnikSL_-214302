@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Прохождение</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Прохождение</h2>
+            </div>
+
+            <div class="content rounded p-3 mb-3">
+                <p class="fs-3">В процессе</p>
+                <div class="row">
+                    <div th:unless="${i.status}" th:each="i : ${user.passings}" class="col-6 mb-2">
+                        <a class="btn btn-light w-100" th:href="${'/passings/' + i.id}">
+                            <span th:text="${i.test.name}"></span>
+                            <span th:if="${i.status}" th:text="${' | Статус: пройден'}"></span>
+                            <span th:unless="${i.status}" th:text="${' | Статус: в процессе'}"></span>
+                            <span th:if="${i.status}" th:text="${' | Набранный балл: ' + i.score}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content rounded p-3">
+                <p class="fs-3">Пройдено</p>
+                <div class="row">
+                    <div th:if="${i.status}" th:each="i : ${user.passings}" class="col-6 mb-2">
+                        <a class="btn btn-light w-100" th:href="${'/passings/' + i.id}">
+                            <span th:text="${i.test.name}"></span>
+                            <span th:if="${i.status}" th:text="${' | Статус: пройден'}"></span>
+                            <span th:unless="${i.status}" th:text="${' | Статус: в процессе'}"></span>
+                            <span th:if="${i.status}" th:text="${' | Результат: ~' + i.result + '%'}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

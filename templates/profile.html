@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Профиль</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Профиль</h2>
+            </div>
+
+            <div th:if="${message}" class="row">
+                <div class="col"></div>
+                <div class="col">
+                    <div class="alert alert-light text-center" role="alert">
+                        <strong th:text="${message}"></strong>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="content rounded p-3">
+                        <img th:src="${'/img/' + user.photo}" class="rounded-circle" style="width: 600px; height: 600px; object-fit: cover;">
+                        <form action="/profile/photo" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="file" accept="image/*" class="form-control" required name="photo">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Обновить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="content rounded p-3">
+                        <form action="/profile/fio" method="post" class="mb-3">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control" required placeholder="ФИО" name="fio"
+                                           th:value="${user.fio}">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Обновить</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div th:if="${role == 'ADMIN'}">
+                            <p class="fs-5 mb-1" th:text="${'Роль: ' + user.role.name}"></p>
+                        </div>
+                        <div th:if="${role == 'USER'}">
+                            <div th:if="${user.department != null}">
+                                <p class="fs-5 mb-1" th:text="${'Должность: ' + user.department.name}"></p>
+                            </div>
+                        <p class="mb-1 fs-5" th:unless="${user.certification}">Аттестация пройдена</p>
+                        <p class="mb-1 fs-5" th:if="${user.certification}">Аттестация не пройдена</p>
+                        <p class="mb-1 fs-5" th:text="${'Дата последеней атесттации: ' + user.certificationDate}"></p>
+                        <p class="mb-1 fs-5" th:text="${'Балл: ' + user.certificationScore}"></p>
+                        <p class="mb-1 fs-5" th:text="${'Проценты: ~' + user.certificationPercent + '%'}"></p>
+                        <div id="drawProfileCountTrueFalse" class="w-100" style="height: 500px"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </section>
+</main>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    var countTrue = /*[[${countTrue}]]*/ 0;
+    var countFalse = /*[[${countFalse}]]*/ 0;
+</script>
+<script src="/js/stats.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

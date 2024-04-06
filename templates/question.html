@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${question.name}"></title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info" th:text="${question.name}"></h2>
+            </div>
+
+            <div class="text-center mb-3">
+                <a th:href="${'/materials/' + materialId + '/tests/' + testId}" class="btn btn-primary">Назад</a>
+                <a th:href="${'/materials/' + materialId + '/tests/' + testId + '/questions/' + questionId + '/delete'}"
+                   class="btn btn-danger" th:unless="${question.test.status}">Удалить вопрос</a>
+            </div>
+
+            <div class="content rounded p-4">
+                <form th:action="${'/materials/' + materialId + '/tests/' + testId + '/questions/' + questionId + '/edit'}"
+                      method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" required class="form-control" name="name" placeholder="Название"
+                                   th:value="${question.name}">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">Обновить вопрос</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <form th:action="${'/materials/' + materialId + '/tests/' + testId + '/questions/' + questionId + '/answers/add'}"
+                      method="post" th:unless="${question.test.status}">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" required class="form-control" name="name" placeholder="Ответ">
+                        </div>
+                        <div class="col">
+                            <input type="number" min="0" step="1" required class="form-control" name="score"
+                                   placeholder="Количество баллов">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">Добавить</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <form th:action="${'/materials/' + materialId + '/tests/' + testId + '/questions/' + questionId + '/answers/' + i.id + '/edit'}"
+                      th:each="i : ${question.answers}" method="post" class="mb-2">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" required class="form-control" name="name" placeholder="Ответ"
+                                   th:value="${i.name}">
+                        </div>
+                        <div class="col">
+                            <input type="number" min="0" step="1" required class="form-control" name="score"
+                                   placeholder="Количество баллов" th:value="${i.score}">
+                        </div>
+                        <div class="col-auto" th:unless="${question.test.status}">
+                            <button class="btn btn-primary" type="submit">Обновить</button>
+                        </div>
+                        <div class="col-auto" th:unless="${question.test.status}">
+                            <a th:href="${'/materials/' + materialId + '/tests/' + testId + '/questions/' + questionId + '/answers/' + i.id + '/delete'}"
+                               class="btn btn-danger">Удалить</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

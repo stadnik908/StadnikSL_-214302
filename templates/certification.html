@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Аналитика</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Аналитика</h2>
+            </div>
+
+            <div class="content rounded p-3">
+                <a href="/certification/pdf" class="btn btn-primary w-100" target="_blank">Сохранить</a>
+                <hr>
+                <div id="drawDepartmentPercent" class="w-100" style="height: 500px"></div>
+                <hr>
+                <div th:each="i : ${users}" class="row mb-2 align-items-center" id="generatePDF">
+                    <div class="col">
+                        <p th:text="${i.fio}"></p>
+                    </div>
+                    <div class="col text-center">
+                        <p th:unless="${i.certification}">Аттестация пройдена</p>
+                        <p th:if="${i.certification}">Аттестация не пройдена</p>
+                    </div>
+                    <div class="col-4">
+                        <p th:text="${'Дата последеней атесттации: ' + i.certificationDate}"></p>
+                    </div>
+                    <div class="col">
+                        <p th:text="${'Балл: ' + i.certificationScore}"></p>
+                    </div>
+                    <div class="col">
+                        <p th:text="${'Проценты: ~' + i.certificationPercent + '%'}"></p>
+                    </div>
+                    <div th:if="${i.certification == false}" class="col-auto">
+                        <a th:href="${'/certification/' + i.id + '/certification'}" class="btn btn-primary">Отправить на
+                            аттестацию</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    var countTrue = /*[[${countTrue}]]*/ 0;
+    var countFalse = /*[[${countFalse}]]*/ 0;
+    var departmentString = /*[[${departmentString}]]*/ [];
+    var departmentFloat = /*[[${departmentFloat}]]*/ [];
+</script>
+<script src="/js/stats.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

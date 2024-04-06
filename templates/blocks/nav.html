@@ -1,0 +1,26 @@
+<nav th:fragment="nav" class="navbar navbar-expand-lg fixed-top bg-body clean-navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand logo" href="/">Certification</a>
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+            <span class="visually-hidden">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav ms-auto align-items-center text-center">
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/articles">Учебные статьи</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/">Аттестация</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
+
+                <li th:if="${role == 'ADMIN'}" class="nav-item"><a class="nav-link" href="/users">Сотрудники</a></li>
+                <li th:if="${role == 'ADMIN'}" class="nav-item"><a class="nav-link" href="/certification">Аналитика</a></li>
+                <li th:if="${role == 'ADMIN'}" class="nav-item"><a class="nav-link" href="/departments">Должности</a></li>
+
+                <li th:if="${role == 'USER'}" class="nav-item"><a class="nav-link" href="/passings">Прохождение</a></li>
+
+                <li th:if="${role == 'NOT'}" class="nav-item"><a class="nav-link" href="/login">Вход</a></li>
+                <li th:if="${role == 'NOT'}" class="nav-item"><a class="nav-link" href="/reg">Регистрация</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/logout">Выход</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

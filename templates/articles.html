@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Учебные статьи</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Учебные статьи</h2>
+            </div>
+
+            <div th:if="${role == 'ADMIN'}" class="text-center mb-3">
+                <a href="/articles/add" class="btn btn-primary">Добавить</a>
+            </div>
+
+            <div class="content mb-3 rounded p-2">
+                <form action="/articles/search" method="get">
+                    <div class="row">
+                        <div class="col-auto">
+                            <a class="btn btn-info" href="/articles">Сбросить</a>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" placeholder="Название" name="name"
+                                   th:value="${name}">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Поиск</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content rounded p-3">
+                <div class="row">
+                    <div th:each="i : ${articles}" class="col-3 mb-2">
+                        <div class="text-center">
+                            <a th:href="${'/articles/' + i.id}">
+                                <img th:src="${'/img/' + i.photo}" class="rounded-circle"
+                                     style="width: 200px; height: 200px;">
+                            </a>
+                        </div>
+                        <p class="lead text-center mt-2" th:text="${i.name}"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Вход</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<main class="page login-page mt-5">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Вход</h2>
+            </div>
+
+            <div th:if="${param.error}" class="row">
+                <div class="col"></div>
+                <div class="col">
+                    <div class="alert alert-light text-center" role="alert">
+                        <strong>Некорректный ввод логина или пароля, или профиль не одобрен</strong>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+
+            <form method="post" action="/login">
+                <div class="mb-3">
+                    <input class="form-control" type="text" placeholder="Логин" required name="username">
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" placeholder="Пароль" required name="password">
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Вход</button>
+            </form>
+
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

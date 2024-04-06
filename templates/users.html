@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Сотрудники</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page mt-5">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Сотрудники</h2>
+            </div>
+
+            <div class="content rounded p-3">
+                <form th:each="i : ${users}" th:action="${'/users/' + i.id + '/edit'}" method="post" class="mb-2"
+                      th:if="${i.id != user.id}">
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-control" type="text" readonly th:value="${i.fio}">
+                        </div>
+                        <div class="col">
+                            <select name="role" required class="form-select">
+                                <option th:each="role : ${roles}" th:value="${role}" th:label="${role.name}"
+                                        th:selected="${role == i.role}"></option>
+                            </select>
+                        </div>
+                        <div th:if="${i.role.name() == 'USER'}" class="col">
+                            <select name="departmentId" required class="form-select">
+                                <option th:if="${i.department == null}" value="0">Выберите должность</option>
+                                <option th:each="department : ${departments}" th:value="${department.id}" th:label="${department.name}"
+                                        th:selected="${department == i.department}"></option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">Обновить</button>
+                        </div>
+                        <div class="col-auto">
+                            <a th:href="${'/users/' + i.id + '/delete'}" class="btn btn-danger">Удалить</a>
+                        </div>
+                        <div th:unless="${i.enabled}" class="col-auto">
+                            <a th:href="${'/users/' + i.id + '/enable'}" class="btn btn-info">Одобрить</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>
